@@ -167,37 +167,66 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
-                    <!-- 如果不设置fork,那么不会restart,devtools热部署不会起作用-->
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <fork>true</fork>
+                    <skip>true</skip>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <mainClass>com.phms.PhmsApp</mainClass>
+                        </manifest>
+                    </archive>
+                    <excludes>
+                        <exclude>*.properties</exclude>
+                        <exclude>*.yml</exclude>
+                        <exclude>*.xml</exclude>
+                        <exclude>*.html</exclude>
+                        <exclude>*.png</exclude>
+                        <exclude>*.js</exclude>
+                        <exclude>*.css</exclude>
+                        <exclude>*.woff</exclude>
+                        <exclude>*.ttf</exclude>
+                        <exclude>*.woff2</exclude>
+                        <exclude>*.eot</exclude>
+                        <exclude>*.svg</exclude>
+                        <exclude>*.map</exclude>
+                        <exclude>config/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>7</source>
-                    <target>7</target>
-                </configuration>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.*</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.*</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
 </project>
