@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>com.phms</groupId>
-    <artifactId>phms</artifactId>
+    <artifactId>petManager</artifactId>
     <version>1.0</version>
     <name>宠物医院管理系统</name>
     <description>宠物医院管理系统</description>
